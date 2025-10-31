@@ -3,12 +3,12 @@ const gtfsData = {
     autobusosalmassora: {}
 };
 
-// Icona personalitzada per a les parades
+// Icona personalitzada per a les parades (cercles)
 const customStopIcon = L.divIcon({
     className: 'custom-stop-icon',
-    html: '<div style="background-color: #007bff; border-radius: 50%; width: 10px; height: 10px; border: 2px solid white;"></div>',
-    iconSize: [14, 14],
-    iconAnchor: [7, 7]
+    html: '<div style="background-color: #007bff; border-radius: 50%; width: 12px; height: 12px; border: 2px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.3);"></div>',
+    iconSize: [16, 16],
+    iconAnchor: [8, 8]
 });
 
 // Variables globals
@@ -48,7 +48,7 @@ async function loadGTFSData(agency) {
     }
 }
 
-// Preprocessar els fitxers per millorar rendiment
+// Preprocessar dades per millorar rendiment
 function preprocessGTFSData(agency) {
     const data = gtfsData[agency];
 
@@ -86,7 +86,7 @@ function preprocessGTFSData(agency) {
     preprocessedData[agency] = { routesById, tripsByRoute, stopTimesByStop };
 }
 
-// Inicialitzar el mapa
+// Inicialitzar mapa
 function initMap() {
     const map = L.map('map').setView([39.95, -0.07], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -102,7 +102,7 @@ function initMap() {
     return map;
 }
 
-// Dibuixar parades
+// Dibuixar parades amb cercles
 function drawStopsOnMap(map, agency) {
     const stops = gtfsData[agency].stops || [];
     const stopTimesIndexed = preprocessedData[agency].stopTimesByStop;
@@ -112,7 +112,8 @@ function drawStopsOnMap(map, agency) {
         const lon = parseFloat(stop.stop_lon);
         if (isNaN(lat) || isNaN(lon)) return;
 
-        const marker = L.marker([lat, lon]);
+        // 🟢 Ací usem el customStopIcon definit a dalt
+        const marker = L.marker([lat, lon], { icon: customStopIcon });
         marker.bindPopup("Carregant...");
 
         marker.on('click', () => {
@@ -158,7 +159,7 @@ function drawStopsOnMap(map, agency) {
     });
 }
 
-// Dibuixar línies (shapes)
+// Dibuixar línies
 function drawRoutes(map, agency) {
     const routes = gtfsData[agency].routes || [];
     const trips = gtfsData[agency].trips || [];
@@ -190,27 +191,7 @@ function drawRoutes(map, agency) {
     });
 }
 
-// Mostrar informació de línies
-function displayRoutesInfo(agency) {
-    const div = document.getElementById('routes-info');
-    const routes = gtfsData[agency].routes || [];
-
-    const title = document.createElement('h3');
-    title.textContent = 'Línies disponibles';
-    div.appendChild(title);
-
-    const list = document.createElement('ul');
-    routes.forEach(route => {
-        const li = document.createElement('li');
-        li.className = 'route-item';
-        li.textContent = `${route.route_short_name} – ${route.route_long_name}`;
-        list.appendChild(li);
-    });
-
-    div.appendChild(list);
-}
-
-// Iniciar aplicació
+// Iniciar aplicació (sense llistat de línies)
 async function startApp() {
     await loadGTFSData('autobusosalmassora');
     preprocessGTFSData('autobusosalmassora');
@@ -218,7 +199,6 @@ async function startApp() {
     const map = initMap();
     drawStopsOnMap(map, 'autobusosalmassora');
     drawRoutes(map, 'autobusosalmassora');
-    displayRoutesInfo('autobusosalmassora');
 }
 
 startApp();

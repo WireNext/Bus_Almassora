@@ -1,5 +1,3 @@
 route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color
 01,00000,Platja,Almassora - Platja,,3,,00EEFF,000000
-02,00000,Festa Urbà,Bus Festa Urbà,,3,,DE032D,000000
-03,00000,Festa Platja,Bus Festa Platja,,3,,C60091,000000
-04,00000,Urbà,Almassora urbà,,3,,FF00BB,000000
+02,00000,Urbà,Almassora urbà,,3,,FF00BB,000000
