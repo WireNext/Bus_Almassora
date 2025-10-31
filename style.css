@@ -1,0 +1,62 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+header {
+    background: #004aad;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+#container {
+    display: flex;
+    height: calc(100% - 100px);
+}
+
+#map {
+    flex: 3;
+    height: 100%;
+}
+
+#routes-info {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    background: #f8f9fa;
+    border-left: 1px solid #ccc;
+}
+
+.route-item {
+    cursor: pointer;
+    margin-bottom: 6px;
+    padding: 4px;
+}
+
+.route-item:hover {
+    background: #e9ecef;
+    border-radius: 6px;
+}
+
+.stop-list {
+    margin-left: 15px;
+    font-size: 0.9em;
+}
+
+footer {
+    text-align: center;
+    padding: 8px;
+    background: #eee;
+    font-size: 0.85em;
+}
+
+.parpadeig {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
